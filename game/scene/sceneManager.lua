@@ -25,8 +25,14 @@ function SceneManager:update(dt)
 	if self.nextScene then
 		if not self.currentScene then
 			self.currentScene = self.nextScene
-			self.nextScene = nil
-			self.currentScene:enter()
+		else
+			self.currentScene:exit()
+			self.currentScene = self.nextScene
 		end
+
+		self.nextScene = nil
+		self.currentScene:enter()
 	end
+
+	self.currentScene:update(dt)
 end
