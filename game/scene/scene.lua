@@ -1,7 +1,6 @@
-local Scene = require("game.util.object").new()
-
 ---@class Scene
 ---@field name string the name of the scene
+local Scene = require("game.util.object").new()
 
 ---Create a new scene
 ---@param name any
@@ -13,14 +12,12 @@ function Scene.new(name)
 end
 
 ---Enter the scene
----@param self Scene
 function Scene:enter()
 	error("Enter not implimented for scene " .. self.name)
 end
 
 ---Update the scene
 ---@param dt number
----@param self Scene
 function Scene:update(dt)
 	error("Update not implemented for scene " .. self.name)
 end
@@ -32,7 +29,6 @@ function Scene:draw()
 end
 
 ---Exit the scene
----@param self Scene
 function Scene:exit()
 	error("End not implemented for scene " .. self.name)
 end
