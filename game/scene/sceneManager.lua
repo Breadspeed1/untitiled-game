@@ -1,5 +1,5 @@
 ---@class SceneManager
----@field scenes Scene[]
+---@field scenes table<string, Scene>
 ---@field currentScene Scene | nil
 ---@field nextScene Scene | nil
 local SceneManager = {
