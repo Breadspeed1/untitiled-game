@@ -1,13 +1,15 @@
 local SceneManager = require("scene.sceneManager")
+local MouseInteractions = require("ui.mouseInteractions")
 
 function love.load()
-	SceneManager:addScene(require("scene.mainMenu").new())
-	SceneManager:addScene(require("scene.testScene").new())
+	SceneManager:addScene(require("scene.mainMenu"))
+	SceneManager:addScene(require("scene.testScene"))
 
 	SceneManager:setScene("MainMenu")
 end
 
 function love.update(dt)
+	MouseInteractions:update()
 	SceneManager:update(dt)
 end
 
@@ -17,10 +19,12 @@ end
 
 function love.mousemoved(x, y, dx, dy)
 	SceneManager:mousemoved(x, y, dx, dy)
+	MouseInteractions:mouseMoved(x, y, dx, dy)
 end
 
 function love.mousepressed(x, y, btn)
 	SceneManager:mousepressed(x, y, btn)
+	MouseInteractions:mouseClicked(x, y, btn)
 end
 
 function love.keypressed(key, scancode, isrepeat)
