@@ -1,6 +1,6 @@
 ---@class Scene
 ---@field name string the name of the scene
-local Scene = require("game.util.object").new()
+local Scene = require("util.object").new()
 
 ---Create a new scene
 ---@param name any
@@ -12,7 +12,8 @@ function Scene.new(name)
 end
 
 ---Enter the scene
-function Scene:enter()
+---@param prev string? name of the previous scene
+function Scene:enter(prev)
 	error("Enter not implimented for scene " .. self.name)
 end
 
@@ -32,5 +33,11 @@ end
 function Scene:exit()
 	error("End not implemented for scene " .. self.name)
 end
+
+function Scene:mousemoved(x, y, dx, dy) end
+
+function Scene:mousepressed(x, y, btn) end
+
+function Scene:keypressed(key, scancode, isrepeat) end
 
 return Scene

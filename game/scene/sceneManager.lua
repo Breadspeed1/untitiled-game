@@ -1,10 +1,17 @@
 ---@class SceneManager
----@field scenes table<string, Scene>
----@field currentScene Scene | nil
----@field nextScene Scene | nil
+---@field private scenes table<string, Scene>
+---@field private currentScene Scene?
+---@field private nextScene Scene?
 local SceneManager = {
 	scenes = {},
 }
+
+---add a new scene
+---@param scene Scene
+function SceneManager:addScene(scene)
+	self.scenes[scene.name] = scene
+end
+
 ---Set the scene for the next loop
 ---@param name string
 function SceneManager:setScene(name)
@@ -23,16 +30,44 @@ function SceneManager:update(dt)
 	end
 
 	if self.nextScene then
+		local prev
 		if not self.currentScene then
 			self.currentScene = self.nextScene
 		else
 			self.currentScene:exit()
+			prev = self.currentScene.name
 			self.currentScene = self.nextScene
 		end
 
 		self.nextScene = nil
-		self.currentScene:enter()
+		self.currentScene:enter(prev)
 	end
 
 	self.currentScene:update(dt)
 end
+
+function SceneManager:draw()
+	if self.currentScene then
+		self.currentScene:draw()
+	end
+end
+
+function SceneManager:mousemoved(x, y, dx, dy)
+	if self.currentScene then
+		self.currentScene:mousemoved(x, y, dx, dy)
+	end
+end
+
+function SceneManager:mousepressed(x, y, btn)
+	if self.currentScene then
+		self.currentScene:mousepressed(x, y, btn)
+	end
+end
+
+function SceneManager:keypressed(key, scancode, isrepeat)
+	if self.currentScene then
+		self.currentScene:keypressed(key, scancode, isrepeat)
+	end
+end
+
+return SceneManager
