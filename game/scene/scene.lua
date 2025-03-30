@@ -24,9 +24,13 @@ function Scene:update(dt)
 end
 
 ---Draw the scene
----@param self Scene
 function Scene:draw()
 	error("Draw not implemented for scene " .. self.name)
+end
+
+---Register the ui for the scene
+function Scene:registerUI()
+	error("RegisterUI not implemented for scene " .. self.name)
 end
 
 ---Exit the scene

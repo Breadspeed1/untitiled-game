@@ -10,6 +10,7 @@ end
 
 function love.update(dt)
 	MouseInteractions:update()
+	SceneManager:registerUI()
 	SceneManager:update(dt)
 end
 

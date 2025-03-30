@@ -9,26 +9,25 @@
 local MouseInteractionRegion = require("util.object").new()
 
 ---Create a new rectangle detection function
----@param x number x coordinate of top left of the rectangle
----@param y number y coordinate of the top left of the rectangle
----@param height number height of the rectangle
----@param width number width of the rectangle
+---@param x fun(): number x coordinate of top left of the rectangle
+---@param y fun(): number y coordinate of the top left of the rectangle
+---@param height fun(): number height of the rectangle
+---@param width fun(): number width of the rectangle
 ---@return fun(x: number, y: number): boolean #detection function
 local rectangleFunction = function(x, y, width, height)
 	return function(px, py)
-		return px >= x and px <= (x + width) and py >= y and py <= (y + height)
+		return px >= x() and px <= (x() + width()) and py >= y() and py <= (y() + height())
 	end
 end
 
 ---Create a new circle detection function
----@param x number x coordinate of center of the circle
----@param y number y coordinate of the center of the circle
----@param r number radius of the circle
+---@param x fun(): number x coordinate of center of the circle
+---@param y fun(): number y coordinate of the center of the circle
+---@param r fun(): number radius of the circle
 ---@return fun(x: number, y: number): boolean #detection function
 local cirlceFunction = function(x, y, r)
-	local r2 = r ^ 2
 	return function(px, py)
-		return ((px - x) ^ 2 + (py - y) ^ 2) < r2
+		return ((px - x()) ^ 2 + (py - y()) ^ 2) < (r() ^ 2)
 	end
 end
 
@@ -51,10 +50,10 @@ end
 
 ---Create a new rectangle MouseInteractionRegion
 ---@param mode MouseInteractionRegion.Mode
----@param x number x coordinate of top left of the rectangle
----@param y number y coordinate of the top left of the rectangle
----@param height number height of the rectangle
----@param width number width of the rectangle
+---@param x fun(): number x coordinate of top left of the rectangle
+---@param y fun(): number y coordinate of the top left of the rectangle
+---@param height fun(): number height of the rectangle
+---@param width fun(): number width of the rectangle
 ---@param clickCallback fun(x: number, y: number, btn: number)?
 ---@param hoverCallback fun(x: number, y: number, dx: number, dy: number)?
 ---@param unhoverCallback fun(x: number, y: number, dx: number, dy: number)?
@@ -71,9 +70,9 @@ end
 
 ---Create a new circle MouseInteractionRegion
 ---@param mode MouseInteractionRegion.Mode
----@param x number x coordinate of center of the cirlce
----@param y number y coordinate of the center of the circle
----@param r number radius of the circle
+---@param x fun(): number x coordinate of center of the cirlce
+---@param y fun(): number y coordinate of the center of the circle
+---@param r fun(): number radius of the circle
 ---@param clickCallback fun(x: number, y: number, btn: number)?
 ---@param hoverCallback fun(x: number, y: number, dx: number, dy: number)?
 ---@param unhoverCallback fun(x: number, y: number, dx: number, dy: number)?

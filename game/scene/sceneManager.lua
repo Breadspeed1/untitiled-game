@@ -46,6 +46,12 @@ function SceneManager:update(dt)
 	self.currentScene:update(dt)
 end
 
+function SceneManager:registerUI()
+	if self.currentScene then
+		self.currentScene:registerUI()
+	end
+end
+
 function SceneManager:draw()
 	if self.currentScene then
 		self.currentScene:draw()

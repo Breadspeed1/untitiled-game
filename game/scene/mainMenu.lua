@@ -1,6 +1,7 @@
 local SceneManager = require("scene.sceneManager")
 local InteractionRegion = require("ui.interactionRegion")
 local MouseInteractions = require("ui.mouseInteractions")
+local RectComponent = require("ui.uiComponent")
 
 ---@class MainMenu : Scene
 local MainMenu = require("util.object").inherit(require("scene.scene"))
@@ -9,63 +10,50 @@ local Instance = setmetatable({
 	name = "MainMenu",
 }, MainMenu)
 
----@type boolean
-local hovered = false
+local size = 250
 
----@type boolean
-local subhovered = false
-
----@type MouseInteractionRegion.Mode
-local subMode = "consume"
+local testSquareComponent = RectComponent.new(
+	function(x, y, width, height, isHovered)
+		if isHovered then
+			love.graphics.setColor(0.5, 0.5, 0.5)
+		else
+			love.graphics.setColor(1, 1, 1)
+		end
+		love.graphics.rectangle("fill", x, y, width, height)
+	end,
+	"consume",
+	function()
+		print("AHHH")
+	end,
+	love.graphics.getWidth() / 2 - size / 2,
+	love.graphics.getHeight() / 2 - size / 2,
+	size,
+	size
+)
 
 function MainMenu:enter(prev)
 	love.graphics.setBackgroundColor(31 / 255, 35 / 255, 46 / 255, 1)
 	print("entering main menu from " .. (prev or "none"))
 end
 
-local swapSubMode = function()
-	if subMode == "consume" then
-		subMode = "passthrough"
-	else
-		subMode = "consume"
-	end
-end
-
 function MainMenu:update(dt)
-	local x = love.graphics.getWidth() / 2
-	local y = love.graphics.getHeight() / 2
+	local curSize = math.abs(math.sin(love.timer.getTime() / 2) * size)
+	local x = love.math.noise(love.timer.getTime() / 2) * 250 - 125
+	local y = love.math.noise(-love.timer.getTime() / 2) * 250 - 125
 
-	MouseInteractions:push(InteractionRegion.newCircle("consume", x, y, 250, function() end, function()
-		hovered = true
-	end, function()
-		hovered = false
-	end))
-
-	MouseInteractions:push(InteractionRegion.newCircle(subMode, x, y, 125, function()
-		swapSubMode()
-	end, function()
-		subhovered = true
-	end, function()
-		subhovered = false
-	end))
+	testSquareComponent:setDimensions(curSize, curSize)
+	testSquareComponent:setPosition(
+		love.graphics.getWidth() / 2 - curSize / 2 + x,
+		love.graphics.getHeight() / 2 - curSize / 2 + y
+	)
 end
 
 function MainMenu:draw()
-	if hovered then
-		love.graphics.setColor(0.5, 0.5, 1)
-	else
-		love.graphics.setColor(1, 1, 1)
-	end
+	testSquareComponent:draw()
+end
 
-	love.graphics.circle("fill", love.graphics.getWidth() / 2, love.graphics.getHeight() / 2, 250)
-
-	if subhovered then
-		love.graphics.setColor(1, 0.5, 0.5)
-	else
-		love.graphics.setColor(0.5, 0.5, 0.5)
-	end
-
-	love.graphics.circle("fill", love.graphics.getWidth() / 2, love.graphics.getHeight() / 2, 125)
+function MainMenu:registerUI()
+	testSquareComponent:registerUI()
 end
 
 function MainMenu:exit()
