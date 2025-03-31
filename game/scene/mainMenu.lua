@@ -8,7 +8,7 @@ local Instance = setmetatable({
 	name = "MainMenu",
 }, MainMenu)
 
-local testBtn = Button.newPrimary("START!", 0, 0, 500, 200, function()
+local testBtn = Button.newPrimary("START!", 0, 0, 300, 100, function()
 	print("erm guys?")
 end)
 

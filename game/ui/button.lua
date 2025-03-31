@@ -29,7 +29,7 @@ function Button.new(text, x, y, width, height, onClick, color)
 	setmetatable(base, Button)
 
 	base.drawFn = function(x, y, width, height, isHovered)
-		base:drawBtn(x, y, width, height, isHovered)
+		Button.drawBtn(base, x, y, width, height, isHovered)
 	end
 
 	base.text = text
@@ -38,16 +38,26 @@ function Button.new(text, x, y, width, height, onClick, color)
 	return base
 end
 
+---Create a new default primary button
+---@param text string
+---@param x number
+---@param y number
+---@param width number
+---@param height number
+---@param onClick fun(x: number, y: number, btn: number)
+---@return Button
 function Button.newPrimary(text, x, y, width, height, onClick)
 	return Button.new(text, x, y, width, height, onClick, DEFAULT_PRIMARY)
 end
 
+---Center the button on the screen
 function Button:center()
 	local w = love.graphics.getWidth()
 	local h = love.graphics.getHeight()
 	self:setPosition(w / 2 - self.width / 2, h / 2 - self.height / 2)
 end
 
+---@private
 function Button:drawBtn(x, y, w, h, isHovered)
 	local textHeight = love.graphics.getFont():getHeight()
 	local textWidth = love.graphics.getFont():getWidth(self.text)
