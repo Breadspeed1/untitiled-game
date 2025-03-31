@@ -1,7 +1,10 @@
 local SceneManager = require("scene.sceneManager")
 local MouseInteractions = require("ui.mouseInteractions")
+local AssetManager = require("asset.assetManager")
 
 function love.load()
+	love.graphics.setFont(AssetManager:getDefault())
+
 	SceneManager:addScene(require("scene.mainMenu"))
 	SceneManager:addScene(require("scene.testScene"))
 

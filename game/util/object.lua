@@ -13,8 +13,7 @@ end
 ---@return table
 function Object.inherit(super)
 	local obj = Object.new()
-	obj.super = super
-	return setmetatable(obj, super)
+	return setmetatable(obj, { __index = super })
 end
 
 return Object
