@@ -6,7 +6,7 @@ function love.load()
 	love.graphics.setFont(AssetManager:getDefault())
 
 	SceneManager:addScene(require("scene.mainMenu"))
-	SceneManager:addScene(require("scene.testScene"))
+	--SceneManager:addScene(require("scene.testScene"))
 
 	SceneManager:setScene("MainMenu")
 end
