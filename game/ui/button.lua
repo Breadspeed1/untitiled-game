@@ -74,7 +74,7 @@ function Button:drawBtn(x, y, w, h, isHovered)
 
 	love.graphics.setColor(0, 0, 0, 1)
 
-	love.graphics.print(self.text, x + w / 2 - textWidth / 2, y + h / 2 - textHeight / 2)
+	love.graphics.printf(self.text, x, y + h / 2 - textHeight / 2, w, "center")
 
 	love.graphics.setLineWidth(8)
 
